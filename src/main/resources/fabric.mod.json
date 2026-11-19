@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "wandry_hp",
+  "version": "${version}",
+  "name": "Wandry HP",
+  "description": "Varinhas, feitiços e equipamentos mágicos.",
+  "authors": ["Wandry HP"],
+  "environment": "*",
+  "entrypoints": { "main": ["com.wandryhp.WandryHP"],
+    "client": ["com.wandryhp.client.WandryHPClient"] },
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": "~1.21.4",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}

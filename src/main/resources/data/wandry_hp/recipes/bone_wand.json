@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CBC",
+    "BVB",
+    " B "
+  ],
+  "key": {
+    "C": {
+      "item": "minecraft:bone_block"
+    },
+    "B": {
+      "item": "minecraft:bone"
+    },
+    "V": {
+      "item": "minecraft:blaze_rod"
+    }
+  },
+  "result": {
+    "id": "wandry_hp:bone_wand",
+    "count": 1
+  }
+}
