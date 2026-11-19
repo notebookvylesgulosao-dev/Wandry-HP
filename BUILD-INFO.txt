@@ -9,7 +9,7 @@ Para compilar automaticamente:
 4. Quando terminar, abra a execucao e baixe o artefato "wandry-hp-jar".
 5. O arquivo .jar estara dentro do artefato baixado.
 
-Compilacao local, com Java 21 e Gradle 8.10.2:
+Compilacao local, com Java 21 e Gradle 8.11.1:
   gradle build
 
 O JAR sera gerado em build/libs/.
