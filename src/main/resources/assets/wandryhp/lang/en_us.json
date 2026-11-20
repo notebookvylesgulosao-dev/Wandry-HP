@@ -1,0 +1,17 @@
+{
+  "item.wandryhp.amethyst_wand": "Amethyst Wand",
+  "item.wandryhp.bone_wand": "Bone Wand",
+  "item.wandryhp.celestial_wand": "Celestial Wand",
+  "item.wandryhp.widow_wand": "Widow Wand",
+  "entity.wandryhp.wand_prop": "Wand Prop",
+  "effect.wandryhp.confusion": "Confusion",
+  "entity.wandryhp.spell_projectile": "Spell Projectile",
+  "key.wandryhp.spell_wheel": "Spell wheel",
+  "key.categories.wandryhp": "WandryHP",
+  "item.wandryhp.gryffindor_chestplate": "Gryffindor Chestplate",
+  "item.wandryhp.hufflepuff_chestplate": "Hufflepuff Chestplate",
+  "item.wandryhp.ravenclaw_chestplate": "Ravenclaw Chestplate",
+  "item.wandryhp.slytherin_chestplate": "Slytherin Chestplate",
+  "item.wandryhp.house_leggings": "House Leggings",
+  "item.wandryhp.house_boots": "House Boots"
+}

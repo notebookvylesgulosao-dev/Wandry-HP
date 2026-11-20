@@ -1,13 +1,17 @@
 {
   "schemaVersion": 1,
-  "id": "wandry_hp",
+  "id": "wandryhp",
   "version": "${version}",
-  "name": "Wandry HP",
-  "description": "Varinhas, feitiços e equipamentos mágicos.",
-  "authors": ["Wandry HP"],
+  "name": "WandryHP",
+  "description": "Lancamento dos props base das varinhas.",
   "environment": "*",
-  "entrypoints": { "main": ["com.wandryhp.WandryHP"],
-    "client": ["com.wandryhp.client.WandryHPClient"] },
+  "entrypoints": {
+    "main": ["com.wandryhp.WandryHP", "com.wandryhp.spell.SpellsInit", "com.wandryhp.armor.HouseArmorInit"],
+    "client": ["com.wandryhp.client.WandryHPClient", "com.wandryhp.client.spell.SpellsClientInit", "com.wandryhp.client.armor.HouseArmorClientInit"]
+  },
+  "mixins": [
+    { "config": "wandryhp.client.mixins.json", "environment": "client" }
+  ],
   "depends": {
     "fabricloader": ">=0.16.0",
     "minecraft": "~1.21.4",

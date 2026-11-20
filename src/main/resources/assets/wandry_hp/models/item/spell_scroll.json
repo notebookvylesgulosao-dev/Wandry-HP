@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "wandry_hp:item/spell_scroll"
-  }
-}
