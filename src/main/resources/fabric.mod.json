@@ -6,11 +6,32 @@
   "description": "Lancamento dos props base das varinhas.",
   "environment": "*",
   "entrypoints": {
-    "main": ["com.wandryhp.WandryHP", "com.wandryhp.spell.SpellsInit", "com.wandryhp.armor.HouseArmorInit"],
-    "client": ["com.wandryhp.client.WandryHPClient", "com.wandryhp.client.spell.SpellsClientInit", "com.wandryhp.client.armor.HouseArmorClientInit"]
+    "main": [
+      "com.wandryhp.WandryHP",
+      "com.wandryhp.spell.SpellsInit",
+      "com.wandryhp.armor.HouseArmorInit",
+      "com.wandryhp.broom.BroomInit",
+      "com.wandryhp.accessory.AccessoryInit",
+      "com.wandryhp.mana.ManaInit",
+      "com.wandryhp.house.HouseSelectionInit",
+      "com.wandryhp.edwiges.EdwigesInit"
+    ],
+    "client": [
+      "com.wandryhp.client.WandryHPClient",
+      "com.wandryhp.client.spell.SpellsClientInit",
+      "com.wandryhp.client.armor.HouseArmorClientInit",
+      "com.wandryhp.client.accessory.AccessoryClientInit",
+      "com.wandryhp.client.mana.ManaClientInit",
+      "com.wandryhp.client.edwiges.EdwigesClientInit",
+      "com.wandryhp.client.broom.BroomClientInit"
+    ]
   },
   "mixins": [
-    { "config": "wandryhp.client.mixins.json", "environment": "client" }
+    "wandryhp.mixins.json",
+    {
+      "config": "wandryhp.client.mixins.json",
+      "environment": "client"
+    }
   ],
   "depends": {
     "fabricloader": ">=0.16.0",

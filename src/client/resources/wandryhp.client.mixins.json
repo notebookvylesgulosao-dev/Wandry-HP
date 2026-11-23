@@ -4,7 +4,16 @@
   "package": "com.wandryhp.client.mixin",
   "compatibilityLevel": "JAVA_21",
   "client": [
-    "KeyBindingMixin"
+    "BipedEntityModelMixin",
+    "HeldItemFeatureRendererMixin",
+    "HeldItemRendererMixin",
+    "KeyBindingMixin",
+    "PlayerEntityRendererMixin",
+    "PlayerEntityRenderStateMixin",
+    "AccessoryRenderStateMixin",
+    "AccessoryRendererMixin",
+    "InventoryScreenMixin",
+    "ScreenInvoker"
   ],
   "injectors": {
     "defaultRequire": 1

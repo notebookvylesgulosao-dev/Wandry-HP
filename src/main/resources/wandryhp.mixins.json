@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.wandryhp.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "PlayerScreenHandlerMixin",
+    "ItemStackMixin",
+    "CraftingResultSlotMixin",
+    "FurnaceOutputSlotMixin",
+    "CampfireBlockEntityMixin",
+    "ItemEntityMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

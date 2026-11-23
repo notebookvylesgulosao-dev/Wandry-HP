@@ -57,6 +57,11 @@ public final class SpellEffects {
 
 	private SpellEffects() {}
 
+	/** Duracao do efeito com o bonus da capa Enchanter Azul do autor do feitico (+20%). */
+	private static int dur(Entity owner, int ticks) {
+		return com.wandryhp.accessory.AccessoryEffects.scaleEffectDuration(owner, ticks);
+	}
+
 	/**
 	 * @param target entidade atingida, ou null se o projétil bateu em um bloco
 	 * @param pos    ponto de impacto
@@ -69,21 +74,21 @@ public final class SpellEffects {
 					CORINFICUS_EXPLOSION_POWER, World.ExplosionSourceType.MOB);
 			case CRUCIO -> {
 				if (target instanceof LivingEntity living) {
-					living.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, CRUCIO_SLOWNESS_TICKS, 0), owner);
-					living.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, CRUCIO_NAUSEA_TICKS, 0), owner);
-					DamageOverTime.start(living, CRUCIO_DAMAGE_TICKS);
+					living.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, dur(owner, CRUCIO_SLOWNESS_TICKS), 0), owner);
+					living.addStatusEffect(new StatusEffectInstance(StatusEffects.NAUSEA, dur(owner, CRUCIO_NAUSEA_TICKS), 0), owner);
+					DamageOverTime.start(living, dur(owner, CRUCIO_DAMAGE_TICKS), owner);
 				}
 			}
 			case PETRIFICUS_TOTALIS -> {
 				if (target instanceof LivingEntity living) {
-					living.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, PETRIFICUS_TICKS,
+					living.addStatusEffect(new StatusEffectInstance(StatusEffects.SLOWNESS, dur(owner, PETRIFICUS_TICKS),
 							PETRIFICUS_SLOWNESS_AMPLIFIER), owner);
 				}
 			}
 			case IMPERIUS -> {
 				// Reaproveita o efeito de Confusão já pronto (inversão feita no cliente via KeyBindingMixin).
 				if (target instanceof LivingEntity living) {
-					living.addStatusEffect(new StatusEffectInstance(ModEffects.CONFUSION, IMPERIUS_CONFUSION_TICKS, 0), owner);
+					living.addStatusEffect(new StatusEffectInstance(ModEffects.CONFUSION, dur(owner, IMPERIUS_CONFUSION_TICKS), 0), owner);
 				}
 			}
 			case EXPELLIARMUS -> expel(world, projectile, owner, pos);

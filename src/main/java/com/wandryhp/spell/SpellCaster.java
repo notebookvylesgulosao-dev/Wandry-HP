@@ -3,13 +3,14 @@ package com.wandryhp.spell;
 import com.wandryhp.WandryHP;
 import com.wandryhp.item.WandItem;
 import com.wandryhp.item.WandType;
+import com.wandryhp.mana.Mana;
+import com.wandryhp.network.WandCasting;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Arm;
-import net.minecraft.util.Hand;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Box;
@@ -45,11 +46,15 @@ public final class SpellCaster {
 			return;
 		}
 		ItemStack stack = player.getMainHandStack();
-		if (!(stack.getItem() instanceof WandItem wand)) {
+		if (!(stack.getItem() instanceof WandItem)) {
 			return;
 		}
 		if (!(player.getWorld() instanceof ServerWorld world)) {
 			return;
+		}
+
+		if (WandCasting.isCasting(player)) {
+			return; // já conjurando: ignora cliques até o lançamento
 		}
 
 		int now = world.getServer().getTicks();
@@ -58,9 +63,22 @@ public final class SpellCaster {
 		if (last != null && now >= last && now - last < spell.cooldownTicks) {
 			return; // ainda em recarga
 		}
+
+		// Mana: o servidor valida e gasta. Lançamento recusado (sem mana) não gasta nada nem inicia a recarga.
+		if (!Mana.tryConsume(player, spell.manaCost)) {
+			return;
+		}
 		casts.put(spell, now);
 
-		WandType type = wand.getWandType();
+		// Animação de conjuração primeiro; o projétil só nasce quando ela terminar (ver WandCasting).
+		WandCasting.begin(player, (caster, type) -> launch(caster, type, spell), spell.manaCost);
+	}
+
+	/** Cria o projétil. Chamado por {@link WandCasting} somente depois que a animação de conjuração terminou. */
+	private static void launch(ServerPlayerEntity player, WandType type, Spell spell) {
+		if (!(player.getWorld() instanceof ServerWorld world)) {
+			return;
+		}
 		Vec3d eye = player.getEyePos();
 		Vec3d forward = player.getRotationVec(1.0f);
 
@@ -88,8 +106,6 @@ public final class SpellCaster {
 		projectile.setPosition(tip);
 		projectile.setVelocity(direction.multiply(WandryHP.CONFIG.projectileSpeed));
 		world.spawnEntity(projectile);
-
-		player.swingHand(Hand.MAIN_HAND, true);
 	}
 
 	/** Direção da ponta até o ponto mirado; sem alvo, segue a direção do olhar. */

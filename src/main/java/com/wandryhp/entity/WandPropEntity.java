@@ -93,7 +93,7 @@ public class WandPropEntity extends ProjectileEntity {
 		Entity owner = this.getOwner();
 
 		if (settings.damage > 0f) {
-			target.damage(world, this.getDamageSources().indirectMagic(this, owner), settings.damage);
+			target.damage(world, this.getDamageSources().indirectMagic(this, owner), settings.damage * com.wandryhp.accessory.AccessoryEffects.wandDamageMultiplier(owner));
 		}
 		if (target instanceof LivingEntity living) {
 			WandEffects.apply(type, settings, living, owner);

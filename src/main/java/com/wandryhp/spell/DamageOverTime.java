@@ -1,5 +1,6 @@
 package com.wandryhp.spell;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.server.world.ServerWorld;
@@ -21,17 +22,30 @@ public final class DamageOverTime {
 	private static final class Entry {
 		final LivingEntity target;
 		final int duration;
+		final Entity owner;
 		int elapsed;
 
-		Entry(LivingEntity target, int duration) {
+		Entry(LivingEntity target, int duration, Entity owner) {
 			this.target = target;
 			this.duration = duration;
+			this.owner = owner;
 		}
 	}
 
 	/** Inicia (ou reinicia) o dano contínuo no alvo. */
 	public static void start(LivingEntity target, int durationTicks) {
-		ACTIVE.put(target.getUuid(), new Entry(target, durationTicks));
+		start(target, durationTicks, null);
+	}
+
+	/** Igual a {@link #start(LivingEntity, int)}, guardando quem lancou o feitiço (para creditar abates). */
+	public static void start(LivingEntity target, int durationTicks, Entity owner) {
+		ACTIVE.put(target.getUuid(), new Entry(target, durationTicks, owner));
+	}
+
+	/** Quem lancou o dano continuo ativo neste alvo, ou null. O dano segue sem atacante (sem knockback). */
+	public static Entity ownerOf(LivingEntity target) {
+		Entry entry = ACTIVE.get(target.getUuid());
+		return entry == null ? null : entry.owner;
 	}
 
 	/** Chamado uma vez por tique do servidor. */

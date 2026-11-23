@@ -27,7 +27,9 @@ public final class WandEffects {
 
 	private static void add(LivingEntity target, StatusEffectInstance effect, WandryConfig.WandSettings s, Entity source) {
 		if (s.effectDurationTicks > 0) { // 0 = nao definido/desativado
-			target.addStatusEffect(effect, source);
+			// Capa Enchanter Azul: +20% de duracao dos efeitos aplicados pelo dono.
+			int duration = com.wandryhp.accessory.AccessoryEffects.scaleEffectDuration(source, effect.getDuration());
+			target.addStatusEffect(new StatusEffectInstance(effect.getEffectType(), duration, effect.getAmplifier()), source);
 		}
 	}
 }

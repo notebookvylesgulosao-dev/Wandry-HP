@@ -5,13 +5,13 @@ import com.wandryhp.entity.ModEntities;
 import com.wandryhp.entity.WandPropEntity;
 import com.wandryhp.item.WandItem;
 import com.wandryhp.item.WandType;
+import com.wandryhp.mana.Mana;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Arm;
-import net.minecraft.util.Hand;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Box;
@@ -35,11 +35,14 @@ public final class WandLauncher {
 
 	public static void tryLaunch(ServerPlayerEntity player) {
 		ItemStack stack = player.getMainHandStack();
-		if (!(stack.getItem() instanceof WandItem wand) || player.isSpectator()) {
+		if (!(stack.getItem() instanceof WandItem) || player.isSpectator()) {
 			return;
 		}
 		if (!(player.getWorld() instanceof ServerWorld world)) {
 			return;
+		}
+		if (WandCasting.isCasting(player)) {
+			return; // ja conjurando: ignora cliques ate o lancamento
 		}
 
 		int now = world.getServer().getTicks();
@@ -47,9 +50,22 @@ public final class WandLauncher {
 		if (last != null && now - last < WandryHP.CONFIG.cooldownTicks) {
 			return;
 		}
+
+		// Mana: cada lancamento de prop custa 1 MP. Recusado (sem mana) nao gasta nada nem inicia o cooldown.
+		if (!Mana.tryConsume(player, Mana.PROP_COST)) {
+			return;
+		}
 		LAST_LAUNCH.put(player.getUuid(), now);
 
-		WandType type = wand.getWandType();
+		// Animacao de conjuracao primeiro; o prop so nasce quando ela terminar (ver WandCasting).
+		WandCasting.begin(player, WandLauncher::launch, Mana.PROP_COST);
+	}
+
+	/** Cria o prop. Chamado por {@link WandCasting} somente depois que a animacao de conjuracao terminou. */
+	private static void launch(ServerPlayerEntity player, WandType type) {
+		if (!(player.getWorld() instanceof ServerWorld world)) {
+			return;
+		}
 		Vec3d eye = player.getEyePos();
 		Vec3d forward = player.getRotationVec(1.0f);
 
@@ -77,8 +93,6 @@ public final class WandLauncher {
 		prop.setPosition(tip);
 		prop.setVelocity(direction.multiply(WandryHP.CONFIG.projectileSpeed));
 		world.spawnEntity(prop);
-
-		player.swingHand(Hand.MAIN_HAND, true);
 	}
 
 	/**
