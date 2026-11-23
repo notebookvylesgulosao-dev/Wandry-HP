@@ -49,7 +49,7 @@ public final class AccessoryEffects {
 
 		// Morte: sem keepInventory os acessorios caem no chao (como a armadura); com keepInventory ficam.
 		ServerLivingEntityEvents.AFTER_DEATH.register((entity, source) -> {
-			if (entity instanceof ServerPlayerEntity player && !player.getWorld().getGameRules().getBoolean(GameRules.KEEP_INVENTORY)) {
+			if (entity instanceof ServerPlayerEntity player && !player.getServerWorld().getGameRules().getBoolean(GameRules.KEEP_INVENTORY)) {
 				AccessoryData data = Accessories.get(player);
 				for (int i = 0; i < AccessoryData.SIZE; i++) {
 					ItemStack stack = data.get(i);
