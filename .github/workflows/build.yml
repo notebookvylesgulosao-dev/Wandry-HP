@@ -16,6 +16,19 @@ jobs:
           set -o pipefail
           chmod +x gradlew
           ./gradlew build --console=plain 2>&1 | tee /tmp/build.log
+      - name: Erros detalhados
+        if: failure()
+        run: |
+          python3 - <<'PY'
+          import re
+          t=open('/tmp/build.log').read().splitlines()
+          out=[]
+          for i,l in enumerate(t):
+              if re.search(r'error:|warning: \[|FAILED|What went wrong', l):
+                  out.append(' | '.join(x.strip() for x in t[i:i+4]))
+          msg='%0A'.join(out[:60])
+          print('::error title=ERROS::'+msg)
+          PY
       - name: Resumo do erro
         if: failure()
         run: |
