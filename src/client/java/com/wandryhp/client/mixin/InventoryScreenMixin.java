@@ -3,14 +3,14 @@ package com.wandryhp.client.mixin;
 import com.wandryhp.accessory.AccessorySlot;
 import com.wandryhp.client.accessory.AccessoryClientState;
 import com.wandryhp.client.accessory.AccessoryToggleButton;
-import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
 import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.screen.slot.Slot;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -21,15 +21,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * (abrir/fechar); os slots em si ficam no PlayerScreenHandler (ver PlayerScreenHandlerMixin).
  */
 @Mixin(InventoryScreen.class)
-public abstract class InventoryScreenMixin {
-	@Shadow
-	protected int x;
-	@Shadow
-	protected int y;
-	@Shadow
-	protected Slot focusedSlot;
-	@Shadow
-	protected TextRenderer textRenderer;
+public abstract class InventoryScreenMixin extends HandledScreen<PlayerScreenHandler> {
+	// x, y, focusedSlot (HandledScreen) e textRenderer (Screen) sao campos herdados: acessados direto via heranca
+	// (um @Shadow de campo herdado nao e encontrado pelo Mixin na classe alvo InventoryScreen).
+	protected InventoryScreenMixin(PlayerScreenHandler handler, PlayerInventory inventory, Text title) {
+		super(handler, inventory, title);
+	}
 
 	@Unique
 	private static final int PANEL_LEFT = -25;
