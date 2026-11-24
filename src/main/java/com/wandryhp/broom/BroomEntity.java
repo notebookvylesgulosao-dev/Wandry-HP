@@ -61,6 +61,12 @@ public class BroomEntity extends Entity {
 
 	// ---------------------------------------------------------------- voo (so no servidor)
 
+	/** Veiculos repassam o dano de queda aos passageiros: a vassoura nao repassa nada (e ela mesma nao sofre dano). */
+	@Override
+	public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
+		return false;
+	}
+
 	/** O jogador montado controla a vassoura (como um barco): o movimento roda no cliente dele, sem atraso. */
 	@Override
 	public LivingEntity getControllingPassenger() {
@@ -71,8 +77,10 @@ public class BroomEntity extends Entity {
 	public void tick() {
 		super.tick();
 		Entity rider = this.getFirstPassenger();
+		// A vassoura nunca acumula queda (o dano de queda de um veiculo e repassado aos passageiros).
+		this.fallDistance = 0;
 		if (rider != null) {
-			// Montado: a altura de queda e zerada, entao aterrissar nao causa dano.
+			// Montado: a altura de queda do jogador tambem e zerada, entao aterrissar nao causa dano.
 			rider.fallDistance = 0;
 			if (this.getWorld().isClient) {
 				spawnTrailClient();
