@@ -38,5 +38,6 @@
   "item.wandryhp.letter_gryffindor": "Gryffindor Letter",
   "item.wandryhp.letter_hufflepuff": "Hufflepuff Letter",
   "item.wandryhp.letter_ravenclaw": "Ravenclaw Letter",
-  "item.wandryhp.letter_slytherin": "Slytherin Letter"
+  "item.wandryhp.letter_slytherin": "Slytherin Letter",
+  "message.wandryhp.broom.look_down": "Look at the ground to place the broom"
 }

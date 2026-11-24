@@ -13,6 +13,7 @@ public class EdwigesInit implements ModInitializer {
 	public void onInitialize() {
 		ModEdwigesEntities.register();
 		ModEdwigesItems.register();
+		net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> EdwigesCommand.register(dispatcher));
 
 		// Forca o registro do attachment antes de qualquer jogador entrar.
 		EdwigesDelivery.DELIVERED.identifier();
