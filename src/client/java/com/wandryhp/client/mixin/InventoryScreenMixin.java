@@ -15,7 +15,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
  * Botao do chapeu de bruxo ao lado do inventario e painel dos 4 slots de acessorio. O botao alterna o painel
@@ -81,16 +80,6 @@ public abstract class InventoryScreenMixin {
 	private void wandryhp$slotTooltip(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
 		if (AccessoryClientState.open && this.focusedSlot instanceof AccessorySlot slot && !slot.hasStack()) {
 			context.drawTooltip(this.textRenderer, Text.translatable(slot.getType().translationKey()), mouseX, mouseY);
-		}
-	}
-
-	/** Clicar no painel (fora dos slots) nao deve ser tratado como clique fora da janela (soltar o item). */
-	@Inject(method = "isClickOutsideBounds", at = @At("HEAD"), cancellable = true)
-	private void wandryhp$panelIsInside(double mouseX, double mouseY, int left, int top, int button,
-										CallbackInfoReturnable<Boolean> cir) {
-		if (AccessoryClientState.open && mouseX >= this.x + PANEL_LEFT && mouseX < this.x
-				&& mouseY >= this.y + PANEL_TOP && mouseY < this.y + PANEL_BOTTOM) {
-			cir.setReturnValue(false);
 		}
 	}
 }
