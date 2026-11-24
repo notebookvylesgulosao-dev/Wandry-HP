@@ -61,13 +61,27 @@ public class BroomEntity extends Entity {
 
 	// ---------------------------------------------------------------- voo (so no servidor)
 
+	/** O jogador montado controla a vassoura (como um barco): o movimento roda no cliente dele, sem atraso. */
+	@Override
+	public LivingEntity getControllingPassenger() {
+		return this.getFirstPassenger() instanceof PlayerEntity player ? player : null;
+	}
+
 	@Override
 	public void tick() {
 		super.tick();
-		if (!(this.getWorld() instanceof ServerWorld world)) {
+		Entity rider = this.getFirstPassenger();
+		if (rider != null) {
+			// Montado: a altura de queda e zerada, entao aterrissar nao causa dano.
+			rider.fallDistance = 0;
+			if (this.getWorld().isClient) {
+				spawnTrailClient();
+			}
+		}
+		// So o lado que controla (o cliente do cavaleiro; ou o servidor quando nao ha jogador) calcula o voo.
+		if (!this.isLogicalSideForUpdatingMovement()) {
 			return;
 		}
-		Entity rider = this.getFirstPassenger();
 		if (rider == null) {
 			// Sem cavaleiro: fica exatamente onde esta.
 			this.input = 0;
@@ -103,18 +117,20 @@ public class BroomEntity extends Entity {
 
 		this.setYaw(rider.getYaw());
 		this.setPitch(MathHelper.clamp(rider.getPitch(), -MAX_VISUAL_PITCH, MAX_VISUAL_PITCH));
-
-		spawnTrail(world);
 	}
 
-	/** Particulas roxas saindo dos gravetos (a traseira da vassoura). Somente visual. */
-	private void spawnTrail(ServerWorld world) {
+	/** Particulas roxas no cliente (cada jogador as ve localmente). Somente visual. */
+	private void spawnTrailClient() {
+		World world = this.getWorld();
 		Vec3d forward = Vec3d.fromPolar(this.getPitch(), this.getYaw());
 		Vec3d tail = this.getPos().add(0.0, 0.5, 0.0).subtract(forward.multiply(0.75));
-		world.spawnParticles(new DustParticleEffect(PURPLE, 1.0f),
-				tail.x, tail.y, tail.z, 3, 0.1, 0.1, 0.1, 0.0);
-		if (world.getRandom().nextInt(3) == 0) {
-			world.spawnParticles(ParticleTypes.WITCH, tail.x, tail.y, tail.z, 1, 0.12, 0.12, 0.12, 0.02);
+		for (int i = 0; i < 3; i++) {
+			world.addParticle(new DustParticleEffect(PURPLE, 1.0f),
+					tail.x + (world.random.nextDouble() - 0.5) * 0.2, tail.y + (world.random.nextDouble() - 0.5) * 0.2,
+					tail.z + (world.random.nextDouble() - 0.5) * 0.2, 0.0, 0.0, 0.0);
+		}
+		if (world.random.nextInt(3) == 0) {
+			world.addParticle(ParticleTypes.WITCH, tail.x, tail.y, tail.z, 0.0, 0.0, 0.0);
 		}
 	}
 

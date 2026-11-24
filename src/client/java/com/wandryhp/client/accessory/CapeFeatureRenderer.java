@@ -19,7 +19,7 @@ public class CapeFeatureRenderer extends FeatureRenderer<PlayerEntityRenderState
 	/** Topo da cabeca (-8) mais 0,5 px da camada externa da skin (hat layer), em pixels; Y negativo sobe. */
 	private static final float ANCHOR_Y = -8.5f;
 	/** Escala do chapeu (1 = tamanho do .bbmodel), aplicada em torno do ponto de encaixe na cabeca. */
-	private static final float HAT_SCALE = 1.5f;
+	private static final float HAT_SCALE = 1.8f;
 
 	public CapeFeatureRenderer(FeatureRendererContext<PlayerEntityRenderState, PlayerEntityModel> context) {
 		super(context);

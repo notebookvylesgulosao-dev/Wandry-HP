@@ -25,6 +25,8 @@ public class BroomRenderer extends EntityRenderer<BroomEntity, BroomRenderState>
 	private static final double MODEL_SCALE = 1.5;
 	/** Altura (blocos, acima dos pes do jogador montado) do centro do modelo = cabo logo abaixo do assento. */
 	private static final float CENTER_HEIGHT = 0.52f;
+	/** Alongamento so no eixo do cabo (X do modelo); espessura e largura ficam iguais. */
+	private static final float LENGTH_STRETCH = 1.4f;
 
 	public BroomRenderer(EntityRendererFactory.Context context) {
 		super(context);
@@ -51,6 +53,8 @@ public class BroomRenderer extends EntityRenderer<BroomEntity, BroomRenderState>
 			// Frente do modelo = +X: leva +X para a direcao do olhar (yaw 0 = +Z) e depois inclina o bico (pitch > 0 = olhando para baixo).
 			matrices.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(-state.yaw - 90.0f));
 			matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-state.pitch));
+
+			matrices.scale(LENGTH_STRETCH, 1.0f, 1.0f);
 
 			double[] b = model.bounds(-1);
 			Affine centered = Affine.translation(-(b[0] + b[3]) / 2.0, -(b[1] + b[4]) / 2.0, -(b[2] + b[5]) / 2.0);

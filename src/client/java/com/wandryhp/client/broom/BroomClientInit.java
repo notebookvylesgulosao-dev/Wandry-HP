@@ -28,7 +28,7 @@ public class BroomClientInit implements ClientModInitializer {
 	}
 
 	private static void tick(MinecraftClient client) {
-		if (client.player == null || !(client.player.getVehicle() instanceof BroomEntity)) {
+		if (client.player == null || !(client.player.getVehicle() instanceof BroomEntity broom)) {
 			lastSent = -1;
 			return;
 		}
@@ -42,6 +42,7 @@ public class BroomClientInit implements ClientModInitializer {
 			if (o.jumpKey.isPressed()) flags |= BroomEntity.UP;
 			if (o.sprintKey.isPressed()) flags |= BroomEntity.DOWN;
 		}
+		broom.setInput(flags); // o cliente do cavaleiro calcula o voo localmente (sem atraso)
 		if (flags != lastSent) {
 			ClientPlayNetworking.send(new BroomInputPayload(flags));
 			lastSent = flags;
