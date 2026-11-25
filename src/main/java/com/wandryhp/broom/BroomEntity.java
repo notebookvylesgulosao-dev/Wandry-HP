@@ -30,7 +30,7 @@ public class BroomEntity extends Entity {
 	/** Bits de {@link BroomInputPayload#flags()}. */
 	public static final int FORWARD = 1, BACK = 2, LEFT = 4, RIGHT = 8, UP = 16, DOWN = 32;
 
-	public static final double MAX_SPEED_BLOCKS_PER_SECOND = 3.0;
+	public static final double MAX_SPEED_BLOCKS_PER_SECOND = 8.0;
 	private static final double MAX_SPEED_PER_TICK = MAX_SPEED_BLOCKS_PER_SECOND / 20.0;
 	/** Fracao da diferenca ate a velocidade desejada que e corrigida por tick (nunca passa do maximo). */
 	private static final double ACCELERATION = 0.25;
@@ -61,13 +61,35 @@ public class BroomEntity extends Entity {
 
 	// ---------------------------------------------------------------- voo (so no servidor)
 
+	/** Veiculos repassam o dano de queda aos passageiros: a vassoura nao repassa nada (e ela mesma nao sofre dano). */
+	@Override
+	public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
+		return false;
+	}
+
+	/** O jogador montado controla a vassoura (como um barco): o movimento roda no cliente dele, sem atraso. */
+	@Override
+	public LivingEntity getControllingPassenger() {
+		return this.getFirstPassenger() instanceof PlayerEntity player ? player : null;
+	}
+
 	@Override
 	public void tick() {
 		super.tick();
-		if (!(this.getWorld() instanceof ServerWorld world)) {
+		Entity rider = this.getFirstPassenger();
+		// A vassoura nunca acumula queda (o dano de queda de um veiculo e repassado aos passageiros).
+		this.fallDistance = 0;
+		if (rider != null) {
+			// Montado: a altura de queda do jogador tambem e zerada, entao aterrissar nao causa dano.
+			rider.fallDistance = 0;
+			if (this.getWorld().isClient) {
+				spawnTrailClient();
+			}
+		}
+		// So o lado que controla (o cliente do cavaleiro; ou o servidor quando nao ha jogador) calcula o voo.
+		if (!this.isLogicalSideForUpdatingMovement()) {
 			return;
 		}
-		Entity rider = this.getFirstPassenger();
 		if (rider == null) {
 			// Sem cavaleiro: fica exatamente onde esta.
 			this.input = 0;
@@ -103,18 +125,20 @@ public class BroomEntity extends Entity {
 
 		this.setYaw(rider.getYaw());
 		this.setPitch(MathHelper.clamp(rider.getPitch(), -MAX_VISUAL_PITCH, MAX_VISUAL_PITCH));
-
-		spawnTrail(world);
 	}
 
-	/** Particulas roxas saindo dos gravetos (a traseira da vassoura). Somente visual. */
-	private void spawnTrail(ServerWorld world) {
+	/** Particulas roxas no cliente (cada jogador as ve localmente). Somente visual. */
+	private void spawnTrailClient() {
+		World world = this.getWorld();
 		Vec3d forward = Vec3d.fromPolar(this.getPitch(), this.getYaw());
 		Vec3d tail = this.getPos().add(0.0, 0.5, 0.0).subtract(forward.multiply(0.75));
-		world.spawnParticles(new DustParticleEffect(PURPLE, 1.0f),
-				tail.x, tail.y, tail.z, 3, 0.1, 0.1, 0.1, 0.0);
-		if (world.getRandom().nextInt(3) == 0) {
-			world.spawnParticles(ParticleTypes.WITCH, tail.x, tail.y, tail.z, 1, 0.12, 0.12, 0.12, 0.02);
+		for (int i = 0; i < 3; i++) {
+			world.addParticle(new DustParticleEffect(PURPLE, 1.0f),
+					tail.x + (world.random.nextDouble() - 0.5) * 0.2, tail.y + (world.random.nextDouble() - 0.5) * 0.2,
+					tail.z + (world.random.nextDouble() - 0.5) * 0.2, 0.0, 0.0, 0.0);
+		}
+		if (world.random.nextInt(3) == 0) {
+			world.addParticle(ParticleTypes.WITCH, tail.x, tail.y, tail.z, 0.0, 0.0, 0.0);
 		}
 	}
 

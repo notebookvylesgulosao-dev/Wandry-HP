@@ -19,6 +19,7 @@
     "client": [
       "com.wandryhp.client.WandryHPClient",
       "com.wandryhp.client.spell.SpellsClientInit",
+      "com.wandryhp.client.spell.SpellCooldownClientInit",
       "com.wandryhp.client.armor.HouseArmorClientInit",
       "com.wandryhp.client.accessory.AccessoryClientInit",
       "com.wandryhp.client.mana.ManaClientInit",

@@ -3,6 +3,8 @@ package com.wandryhp.edwiges;
 import com.wandryhp.armor.HouseType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ItemEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
@@ -229,19 +231,19 @@ public class EdwigesEntity extends Entity {
 		this.setPitch(this.getPitch() + MathHelper.clamp(targetPitch - this.getPitch(), -3.0f, 3.0f));
 	}
 
-	/** Solta o envelope no ponto exato em que ele esta preso e marca a entrega como feita. */
+	/** Solta o envelope (item fisico, com gravidade) no ponto exato em que ele esta preso e marca a entrega como feita. */
 	private void dropLetter(ServerWorld world, ServerPlayerEntity player) {
 		this.dropped = true;
-		String houseId = this.getHouseId();
-		double[] offset = EdwigesRig.letterWorldOffset(houseId, EdwigesRig.ANIM_POUSO, this.stateTicks / 20.0, false, this.getYaw(), this.getPitch());
+		// Ela sempre carrega o envelope generico (a carta da casa so surge no clique direito).
+		double[] offset = EdwigesRig.letterWorldOffset(null, EdwigesRig.ANIM_POUSO, this.stateTicks / 20.0, false, this.getYaw(), this.getPitch());
 		Vec3d center = this.getPos().add(offset[0], offset[1], offset[2]);
 
-		LetterEntity letter = new LetterEntity(ModEdwigesEntities.LETTER, world);
-		letter.refreshPositionAndAngles(center.x, center.y - LetterEntity.AIRBORNE_PIVOT, center.z, this.getYaw(), this.getPitch());
-		letter.setHouseId(houseId);
-		letter.setRecipient(player.getUuid());
-		letter.setVelocity(this.getVelocity());
-		world.spawnEntity(letter);
+		ItemEntity envelope = new ItemEntity(world, center.x, center.y, center.z,
+				new ItemStack(ModEdwigesItems.ENVELOPE), 0.0, 0.0, 0.0);
+		envelope.setPickupDelay(20);
+		envelope.setNeverDespawn();
+		envelope.setInvulnerable(true);
+		world.spawnEntity(envelope);
 
 		this.setHasLetter(false);
 		EdwigesDelivery.markDelivered(player);

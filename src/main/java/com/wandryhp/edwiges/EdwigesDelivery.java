@@ -84,7 +84,8 @@ public final class EdwigesDelivery {
 		}
 	}
 
-	private static void spawn(ServerWorld world, ServerPlayerEntity player, HouseType house) {
+	/** Faz a Edwiges aparecer e voar ate o jogador (usado pela entrega automatica e pelo comando). */
+	public static boolean spawn(ServerWorld world, ServerPlayerEntity player, HouseType house) {
 		Vec3d pos = pickSpawnPoint(world, player);
 		Vec3d toPlayer = player.getEyePos().subtract(pos);
 
@@ -97,7 +98,9 @@ public final class EdwigesDelivery {
 		owl.setVelocity(toPlayer.normalize().multiply(EdwigesSettings.SPEED_PER_TICK));
 		if (world.spawnEntity(owl)) {
 			ACTIVE.put(player.getUuid(), owl.getUuid());
+			return true;
 		}
+		return false;
 	}
 
 	/**

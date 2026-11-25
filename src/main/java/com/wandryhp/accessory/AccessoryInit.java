@@ -46,6 +46,10 @@ public class AccessoryInit implements ModInitializer {
 						entries.add(ModAccessoryItems.cape(cape));
 					}
 					entries.add(BroomInit.ITEM);
+					entries.add(com.wandryhp.edwiges.ModEdwigesItems.ENVELOPE);
+					for (HouseType house : HouseType.values()) {
+						entries.add(com.wandryhp.edwiges.ModEdwigesItems.letter(house));
+					}
 				})
 				.build());
 	}

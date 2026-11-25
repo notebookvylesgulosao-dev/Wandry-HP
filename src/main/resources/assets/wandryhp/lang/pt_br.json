@@ -8,6 +8,7 @@
   "entity.wandryhp.wand_prop": "Prop da Varinha",
   "effect.wandryhp.confusion": "Confusão",
   "entity.wandryhp.spell_projectile": "Projétil de Feitiço",
+  "entity.wandryhp.patronus": "Patrono",
   "key.wandryhp.spell_wheel": "Roda de feitiços",
   "key.categories.wandryhp": "WandryHP",
   "item.wandryhp.gryffindor_chestplate": "Peitoral da Grifinória",
@@ -33,5 +34,11 @@
   "wandryhp.accessory.tooltip.yellow": "+30% de velocidade de movimento",
   "wandryhp.accessory.tooltip.purple": "+30% de velocidade de movimento",
   "item.wandryhp.witch_broom": "Vassoura Voadora",
-  "entity.wandryhp.witch_broom": "Vassoura Voadora"
+  "entity.wandryhp.witch_broom": "Vassoura Voadora",
+  "item.wandryhp.envelope": "Envelope",
+  "item.wandryhp.letter_gryffindor": "Carta da Grifinória",
+  "item.wandryhp.letter_hufflepuff": "Carta da Lufa-Lufa",
+  "item.wandryhp.letter_ravenclaw": "Carta da Corvinal",
+  "item.wandryhp.letter_slytherin": "Carta da Sonserina",
+  "message.wandryhp.broom.look_down": "Olhe para o chão para colocar a vassoura"
 }

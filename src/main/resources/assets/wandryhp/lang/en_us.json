@@ -8,6 +8,7 @@
   "entity.wandryhp.wand_prop": "Wand Prop",
   "effect.wandryhp.confusion": "Confusion",
   "entity.wandryhp.spell_projectile": "Spell Projectile",
+  "entity.wandryhp.patronus": "Patronus",
   "key.wandryhp.spell_wheel": "Spell wheel",
   "key.categories.wandryhp": "WandryHP",
   "item.wandryhp.gryffindor_chestplate": "Gryffindor Chestplate",
@@ -33,5 +34,11 @@
   "wandryhp.accessory.tooltip.yellow": "+30% movement speed",
   "wandryhp.accessory.tooltip.purple": "+30% movement speed",
   "item.wandryhp.witch_broom": "Flying Broom",
-  "entity.wandryhp.witch_broom": "Flying Broom"
+  "entity.wandryhp.witch_broom": "Flying Broom",
+  "item.wandryhp.envelope": "Envelope",
+  "item.wandryhp.letter_gryffindor": "Gryffindor Letter",
+  "item.wandryhp.letter_hufflepuff": "Hufflepuff Letter",
+  "item.wandryhp.letter_ravenclaw": "Ravenclaw Letter",
+  "item.wandryhp.letter_slytherin": "Slytherin Letter",
+  "message.wandryhp.broom.look_down": "Look at the ground to place the broom"
 }

@@ -5,6 +5,7 @@ import com.wandryhp.item.WandItem;
 import com.wandryhp.item.WandType;
 import com.wandryhp.mana.Mana;
 import com.wandryhp.network.WandCasting;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.ItemStack;
@@ -53,6 +54,12 @@ public final class SpellCaster {
 			return;
 		}
 
+		// Lumos aceso: lançar de novo apaga na hora (sem animação, mana nem recarga).
+		if (spell == Spell.LUMOS && LumosLight.isActive(player)) {
+			LumosLight.turnOff(player);
+			return;
+		}
+
 		if (WandCasting.isCasting(player)) {
 			return; // já conjurando: ignora cliques até o lançamento
 		}
@@ -69,6 +76,7 @@ public final class SpellCaster {
 			return;
 		}
 		casts.put(spell, now);
+		ServerPlayNetworking.send(player, new SpellCooldownPayload(spell.ordinal(), spell.cooldownTicks)); // HUD de recarga
 
 		// Animação de conjuração primeiro; o projétil só nasce quando ela terminar (ver WandCasting).
 		WandCasting.begin(player, (caster, type) -> launch(caster, type, spell), spell.manaCost);
@@ -79,6 +87,16 @@ public final class SpellCaster {
 		if (!(player.getWorld() instanceof ServerWorld world)) {
 			return;
 		}
+		// Feitiços sem projétil: o efeito acontece no fim da animação de conjuração.
+		if (spell == Spell.LUMOS) {
+			LumosLight.turnOn(player);
+			return;
+		}
+		if (spell == Spell.EXPECTO_PATRONUM) {
+			PatronusEntity.summon(player);
+			return;
+		}
+
 		Vec3d eye = player.getEyePos();
 		Vec3d forward = player.getRotationVec(1.0f);
 
@@ -106,6 +124,20 @@ public final class SpellCaster {
 		projectile.setPosition(tip);
 		projectile.setVelocity(direction.multiply(WandryHP.CONFIG.projectileSpeed));
 		world.spawnEntity(projectile);
+	}
+
+	/** Posição da ponta da varinha (mesma conta do lançamento), sem o teste de parede. */
+	public static Vec3d wandTip(ServerPlayerEntity player, WandType type) {
+		Vec3d eye = player.getEyePos();
+		Vec3d forward = player.getRotationVec(1.0f);
+		double yaw = Math.toRadians(player.getYaw());
+		Vec3d right = new Vec3d(-Math.cos(yaw), 0.0, -Math.sin(yaw));
+		Vec3d up = right.crossProduct(forward);
+		double side = player.getMainArm() == Arm.RIGHT ? 1.0 : -1.0;
+		return eye
+				.add(right.multiply(side * type.tipRight))
+				.add(up.multiply(type.tipUp))
+				.add(forward.multiply(type.tipForward));
 	}
 
 	/** Direção da ponta até o ponto mirado; sem alvo, segue a direção do olhar. */

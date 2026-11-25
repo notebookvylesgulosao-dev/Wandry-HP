@@ -1,0 +1,15 @@
+WANDRY HP - COMPILACAO
+
+O projeto usa Minecraft 1.21.4, Fabric Loom 1.9.2 e Java 21.
+
+Para compilar automaticamente:
+1. Envie o conteudo desta pasta para um repositorio GitHub.
+2. Abra a aba Actions do repositorio.
+3. Execute o workflow "Build Wandry HP" (Run workflow), ou faca um push.
+4. Quando terminar, abra a execucao e baixe o artefato "wandry-hp-jar".
+5. O arquivo .jar estara dentro do artefato baixado.
+
+Compilacao local, com Java 21 e Gradle 8.11.1:
+  gradle build
+
+O JAR sera gerado em build/libs/.

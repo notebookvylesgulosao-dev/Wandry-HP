@@ -59,11 +59,11 @@ public class EdwigesRenderer extends EntityRenderer<EdwigesEntity, EdwigesRender
 					vertexConsumers.getBuffer(RenderLayer.getEntityCutoutNoCull(OWL_TEXTURE)), light, EdwigesRig.PX);
 
 			if (state.hasLetter) {
-				BbModel letter = EdwigesRig.letter(state.houseId);
+				BbModel letter = EdwigesRig.letter(null);
 				if (letter != null) {
 					Affine base = EdwigesRig.letterBase(owl, letter, pose[owl.boneIndex(EdwigesRig.BODY_BONE)]);
 					Affine[] rest = letter.pose(null, 0, false);
-					String key = EdwigesRig.letterKey(state.houseId);
+					String key = EdwigesRig.letterKey(null);
 					// Um buffer por vez: termina de escrever uma textura antes de pegar o da proxima.
 					for (int tex = 0; tex < letter.textureCount; tex++) {
 						BbModelDrawer.draw(letter, rest, base, tex, entry,
