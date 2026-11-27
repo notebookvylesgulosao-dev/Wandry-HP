@@ -8,6 +8,7 @@
   "entity.wandryhp.wand_prop": "Prop da Varinha",
   "effect.wandryhp.confusion": "Confusão",
   "entity.wandryhp.spell_projectile": "Projétil de Feitiço",
+  "entity.wandryhp.patronus": "Patrono",
   "key.wandryhp.spell_wheel": "Roda de feitiços",
   "key.categories.wandryhp": "WandryHP",
   "item.wandryhp.gryffindor_chestplate": "Peitoral da Grifinória",
@@ -39,5 +40,12 @@
   "item.wandryhp.letter_hufflepuff": "Carta da Lufa-Lufa",
   "item.wandryhp.letter_ravenclaw": "Carta da Corvinal",
   "item.wandryhp.letter_slytherin": "Carta da Sonserina",
-  "message.wandryhp.broom.look_down": "Olhe para o chão para colocar a vassoura"
+  "message.wandryhp.broom.look_down": "Olhe para o chão para colocar a vassoura",
+  "item.wandryhp.good_book": "Livro do Bem",
+  "item.wandryhp.bad_book": "Livro do Mal",
+  "alignment.wandryhp.neutral": "Neutro",
+  "alignment.wandryhp.good": "Bom",
+  "alignment.wandryhp.evil": "Mau",
+  "message.wandryhp.alignment.changed": "Seu alinhamento agora é: %s",
+  "message.wandryhp.alignment.already": "Você já é %s"
 }

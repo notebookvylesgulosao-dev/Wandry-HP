@@ -76,6 +76,10 @@ public class SpellProjectileEntity extends ProjectileEntity {
 
 		if (world instanceof ServerWorld serverWorld) {
 			spawnTrail(serverWorld, from, this.getPos());
+			if (getSpell() == Spell.ACCIO) {
+				// Accio: os itens perto do caminho também são puxados, não só os do ponto de impacto.
+				AccioPull.pullAround(serverWorld, this.getOwner(), this.getPos(), SpellEffects.ACCIO_SWEEP_RADIUS);
+			}
 		}
 	}
 

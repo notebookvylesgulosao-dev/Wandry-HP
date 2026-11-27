@@ -4,7 +4,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 
 /**
- * Os sete feitiços. Cada um conhece o modelo 3D do projétil, a cor, a recarga e a paleta do rastro.
+ * Os feitiços (os sete originais + Accio, Wingardium Leviosa, Lumos, Expecto Patronum e Incendio). Cada um conhece o modelo 3D do projétil, a cor, a recarga e a paleta do rastro.
  *
  * <p>Corinficus e Crucio usam o mesmo modelo vermelho (só existe um .bbmodel vermelho).
  * Os itens do rastro seguem a ordem lã, concreto, corante (alternados), nas cores do feitiço.
@@ -38,7 +38,42 @@ public enum Spell {
 
 	SECTUMSEMPRA("sectumsempra", "Sectumsempra", "purple", 0x9040E0, 30, 30,
 			new Item[] {Items.PURPLE_WOOL, Items.PURPLE_CONCRETE, Items.PURPLE_DYE},
-			new int[] {0x9040E0, 0x7020B0});
+			new int[] {0x9040E0, 0x7020B0}),
+
+	// ---- Feitiços adicionados depois (no fim da lista: a ordem dos antigos, enviada pela rede, não muda).
+	// Reaproveitam os modelos de projétil já existentes: roxo, turquesa, amarelo e vermelho.
+	// Recarga e mana: assumidos (não definidos no pedido), ajuste aqui.
+
+	ACCIO("accio", "Accio", "purple", 0x9040E0, 20, 30,
+			new Item[] {Items.PURPLE_WOOL, Items.PURPLE_CONCRETE, Items.PURPLE_DYE},
+			new int[] {0x9040E0, 0x7020B0}),
+
+	WINGARDIUM_LEVIOSA("wingardium_leviosa", "Wingardium Leviosa", "turquoise", 0x2EE6D6, 30, 40,
+			new Item[] {Items.CYAN_WOOL, Items.CYAN_CONCRETE, Items.CYAN_DYE},
+			new int[] {0x2EE6D6, 0x1FB5A8}),
+
+	/** Sem projétil: acende a ponta da varinha (liga/desliga). */
+	LUMOS("lumos", "Lumos", "yellow", 0xFFE81F, 3, 10,
+			new Item[] {Items.YELLOW_WOOL, Items.YELLOW_CONCRETE, Items.YELLOW_DYE},
+			new int[] {0xFFE81F, 0xE0B800}),
+
+	/** Sem projétil: invoca o Patrono ({@link PatronusEntity}). */
+	EXPECTO_PATRONUM("expecto_patronum", "Expecto Patronum", "turquoise", 0x2EE6D6, 60, 80,
+			new Item[] {Items.CYAN_WOOL, Items.CYAN_CONCRETE, Items.CYAN_DYE},
+			new int[] {0x2EE6D6, 0x1FB5A8}),
+
+	INCENDIO("incendio", "Incendio", "red", 0xE02020, 20, 35,
+			new Item[] {Items.RED_WOOL, Items.RED_CONCRETE, Items.RED_DYE},
+			new int[] {0xE02020, 0xB01010}),
+
+	/**
+	 * Sem projétil: atrai os mobs ao centro, ergue e solta ({@link Vortem}). Sem dano. Paleta azul-bebê e turquesa
+	 * (sem roxo); reaproveita o modelo turquesa só porque todo feitiço precisa de um modelId.
+	 */
+	VORTEM("vortem", "Vortem", "turquoise", 0x7FDBFF, 30, 45,
+			new Item[] {Items.LIGHT_BLUE_WOOL, Items.CYAN_CONCRETE, Items.LIGHT_BLUE_DYE,
+					Items.CYAN_WOOL, Items.LIGHT_BLUE_CONCRETE, Items.CYAN_DYE},
+			new int[] {0x89CFF0, 0x40E0D0, 0xA6E3F5, 0x2EE6D6});
 
 	public final String id;
 	public final String displayName;

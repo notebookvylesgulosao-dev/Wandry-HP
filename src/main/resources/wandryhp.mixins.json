@@ -9,7 +9,8 @@
     "CraftingResultSlotMixin",
     "FurnaceOutputSlotMixin",
     "CampfireBlockEntityMixin",
-    "ItemEntityMixin"
+    "ItemEntityMixin",
+    "PlayerEntityDisplayNameMixin"
   ],
   "injectors": {
     "defaultRequire": 1

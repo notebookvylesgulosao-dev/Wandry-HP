@@ -38,6 +38,7 @@ public class SpellsClientInit implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		EntityRendererRegistry.register(ModSpellEntities.SPELL_PROJECTILE, SpellProjectileRenderer::new);
+		EntityRendererRegistry.register(ModSpellEntities.PATRONUS, PatronusRenderer::new);
 
 		// Carrega a geometria dos projéteis direto dos .bbmodel originais.
 		ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(

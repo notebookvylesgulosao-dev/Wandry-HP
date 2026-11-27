@@ -45,7 +45,7 @@ public final class DamageOverTime {
 	/** Quem lancou o dano continuo ativo neste alvo, ou null. O dano segue sem atacante (sem knockback). */
 	public static Entity ownerOf(LivingEntity target) {
 		Entry entry = ACTIVE.get(target.getUuid());
-		return entry == null ? null : entry.owner;
+		return entry == null ? IncendioBurn.ownerOf(target) : entry.owner;
 	}
 
 	/** Chamado uma vez por tique do servidor. */

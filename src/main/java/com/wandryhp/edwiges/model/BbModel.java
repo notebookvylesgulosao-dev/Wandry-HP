@@ -218,6 +218,14 @@ public final class BbModel {
 	private void addCube(JsonObject cube, int bone, List<double[]> uvSize) {
 		double[] from = array(cube.getAsJsonArray("from"));
 		double[] to = array(cube.getAsJsonArray("to"));
+		// "inflate" (camadas externas, como o chapeu/jaqueta do Steve): engorda o cubo em todos os lados.
+		double inflate = cube.has("inflate") && !cube.get("inflate").isJsonNull() ? cube.get("inflate").getAsDouble() : 0.0;
+		if (inflate != 0.0) {
+			for (int a = 0; a < 3; a++) {
+				from[a] -= inflate;
+				to[a] += inflate;
+			}
+		}
 		double[] origin = cube.has("origin") ? array(cube.getAsJsonArray("origin")) : new double[3];
 		double[] rotation = cube.has("rotation") && !cube.get("rotation").isJsonNull() ? array(cube.getAsJsonArray("rotation")) : new double[3];
 		double[] r = Affine.rotationZYX(rotation[0], rotation[1], rotation[2]);

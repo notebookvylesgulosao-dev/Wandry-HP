@@ -1,6 +1,7 @@
 package com.wandryhp.spell;
 
 import com.wandryhp.effect.ModEffects;
+import net.minecraft.block.AbstractFireBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.FallingBlockEntity;
@@ -55,6 +56,28 @@ public final class SpellEffects {
 	/** Definido: alcance de 8 blocos, contado a partir do ponto de impacto. */
 	public static final double EXPELLIARMUS_RADIUS = 8.0;
 
+	/** Definido: Wingardium Leviosa levita a entidade por 4 s. */
+	public static final int LEVIOSA_TICKS = 4 * 20;
+
+	/** Definido: Incendio põe fogo por 8 s; o dano total da queimadura não passa de 3 corações. */
+	public static final int INCENDIO_FIRE_TICKS = 8 * 20;
+	public static final float INCENDIO_MAX_DAMAGE = 3 * HEART;
+
+	/** Definido: Patrono, 2 corações por ataque, até 3 alvos ao mesmo tempo, raio de 5 blocos. */
+	public static final float PATRONUS_DAMAGE = 2 * HEART;
+	public static final int PATRONUS_MAX_TARGETS = 3;
+	public static final double PATRONUS_RADIUS = 5.0;
+	/** Assumido: o pedido não define quanto o Patrono dura (45 s) nem a frequência dos ataques (1 por segundo). */
+	public static final int PATRONUS_LIFETIME_TICKS = 45 * 20;
+	public static final int PATRONUS_ATTACK_INTERVAL_TICKS = 20;
+
+	/** Assumido: o pedido não define o alcance do Accio: 5 blocos em volta do impacto e 2 blocos em volta do projétil em voo. */
+	public static final double ACCIO_IMPACT_RADIUS = 5.0;
+	public static final double ACCIO_SWEEP_RADIUS = 2.0;
+
+	/** Assumido: nível de luz do Lumos (14, o mesmo da tocha). */
+	public static final int LUMOS_LIGHT_LEVEL = 14;
+
 	private SpellEffects() {}
 
 	/** Duracao do efeito com o bonus da capa Enchanter Azul do autor do feitico (+20%). */
@@ -92,6 +115,47 @@ public final class SpellEffects {
 				}
 			}
 			case EXPELLIARMUS -> expel(world, projectile, owner, pos);
+			case ACCIO -> AccioPull.pullAround(world, owner, pos, ACCIO_IMPACT_RADIUS);
+			case WINGARDIUM_LEVIOSA -> {
+				if (target != null) {
+					Leviosa.start(world, owner, target, dur(owner, LEVIOSA_TICKS));
+				}
+			}
+			case INCENDIO -> {
+				if (target instanceof LivingEntity living) {
+					IncendioBurn.start(living, owner, dur(owner, INCENDIO_FIRE_TICKS));
+				} else if (target == null) {
+					ignite(world, projectile, pos);
+				}
+			}
+			// Lumos, Expecto Patronum e Vortem não têm projétil: rodam direto em SpellCaster.
+			case LUMOS, EXPECTO_PATRONUM, VORTEM -> { }
+		}
+	}
+
+	// ---------------------------------------------------------------- Incendio
+
+	/**
+	 * Incendeia o chão no ponto de impacto: o bloco de ar logo antes da superfície atingida e os vizinhos em cruz,
+	 * cada um descendo até 3 blocos para achar chão onde o fogo pode existir (fogo comum ou de almas).
+	 */
+	private static void ignite(ServerWorld world, SpellProjectileEntity projectile, Vec3d impact) {
+		Vec3d travel = projectile.getVelocity();
+		Vec3d back = travel.lengthSquared() > 1.0E-6 ? impact.subtract(travel.normalize().multiply(0.1)) : impact;
+		BlockPos origin = BlockPos.ofFloored(back);
+		BlockPos[] columns = {origin, origin.north(), origin.south(), origin.east(), origin.west()};
+		for (BlockPos column : columns) {
+			for (int dy = 0; dy >= -3; dy--) {
+				BlockPos pos = column.add(0, dy, 0);
+				if (!world.getBlockState(pos).isAir()) {
+					break; // bateu em algo sólido ou líquido sem achar onde colocar fogo
+				}
+				BlockState fire = AbstractFireBlock.getState(world, pos);
+				if (fire.canPlaceAt(world, pos)) {
+					world.setBlockState(pos, fire);
+					break;
+				}
+			}
 		}
 	}
 

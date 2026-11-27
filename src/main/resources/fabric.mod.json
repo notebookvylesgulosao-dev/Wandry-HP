@@ -14,16 +14,19 @@
       "com.wandryhp.accessory.AccessoryInit",
       "com.wandryhp.mana.ManaInit",
       "com.wandryhp.house.HouseSelectionInit",
-      "com.wandryhp.edwiges.EdwigesInit"
+      "com.wandryhp.edwiges.EdwigesInit",
+      "com.wandryhp.alignment.AlignmentInit"
     ],
     "client": [
       "com.wandryhp.client.WandryHPClient",
       "com.wandryhp.client.spell.SpellsClientInit",
+      "com.wandryhp.client.spell.SpellCooldownClientInit",
       "com.wandryhp.client.armor.HouseArmorClientInit",
       "com.wandryhp.client.accessory.AccessoryClientInit",
       "com.wandryhp.client.mana.ManaClientInit",
       "com.wandryhp.client.edwiges.EdwigesClientInit",
-      "com.wandryhp.client.broom.BroomClientInit"
+      "com.wandryhp.client.broom.BroomClientInit",
+      "com.wandryhp.client.alignment.AlignmentClientInit"
     ]
   },
   "mixins": [

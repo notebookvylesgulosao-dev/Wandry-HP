@@ -11,6 +11,7 @@ import net.minecraft.util.Identifier;
 
 public final class ModSpellEntities {
 	public static EntityType<SpellProjectileEntity> SPELL_PROJECTILE;
+	public static EntityType<PatronusEntity> PATRONUS;
 
 	private ModSpellEntities() {}
 
@@ -24,5 +25,16 @@ public final class ModSpellEntities {
 						.disableSaving()
 						.disableSummon()
 						.build(key));
+
+		RegistryKey<EntityType<?>> patronusKey = RegistryKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of(WandryHP.MOD_ID, "patronus"));
+		PATRONUS = Registry.register(Registries.ENTITY_TYPE, patronusKey,
+				EntityType.Builder.<PatronusEntity>create(PatronusEntity::new, SpawnGroup.MISC)
+						.dimensions(0.6f, 2.0f)
+						.maxTrackingRange(8)
+						.trackingTickInterval(1)
+						.makeFireImmune()
+						.disableSaving()
+						.disableSummon()
+						.build(patronusKey));
 	}
 }
