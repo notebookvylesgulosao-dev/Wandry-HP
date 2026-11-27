@@ -50,6 +50,8 @@ public class AccessoryInit implements ModInitializer {
 					for (HouseType house : HouseType.values()) {
 						entries.add(com.wandryhp.edwiges.ModEdwigesItems.letter(house));
 					}
+					entries.add(com.wandryhp.alignment.ModAlignmentItems.GOOD_BOOK);
+					entries.add(com.wandryhp.alignment.ModAlignmentItems.BAD_BOOK);
 				})
 				.build());
 	}

@@ -33,18 +33,23 @@ public class SpellsInit implements ModInitializer {
 			Leviosa.clear();
 			IncendioBurn.clear();
 			PatronusEntity.clear();
+			Vortem.clear();
 		});
 
-		// Accio, Wingardium Leviosa, Incendio, Lumos e Expecto Patronum.
+		// Accio, Wingardium Leviosa, Incendio, Lumos, Expecto Patronum e Vortem.
 		ServerTickEvents.END_SERVER_TICK.register(server -> {
 			AccioPull.tick();
 			Leviosa.tick();
 			IncendioBurn.tick();
 			LumosLight.tick(server);
+			Vortem.tick();
 		});
 		ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> {
 			if (source.isOf(DamageTypes.FALL) && Leviosa.protects(entity)) {
 				return false; // Leviosa: volta ao chão sem dano de queda
+			}
+			if (source.isOf(DamageTypes.FALL) && Vortem.protects(entity)) {
+				return false; // Vortem: o mob solto cai sem dano
 			}
 			if (source.isOf(DamageTypes.ON_FIRE) && IncendioBurn.isBurning(entity)) {
 				return false; // Incendio aplica o próprio dano de queimadura (limite de 3 corações)
@@ -59,6 +64,7 @@ public class SpellsInit implements ModInitializer {
 		// Antes de salvar o mundo: devolve a gravidade (NoGravity seria salvo) e remove os blocos de luz.
 		ServerLifecycleEvents.SERVER_STOPPING.register(server -> {
 			Leviosa.releaseAll();
+			Vortem.releaseAllNow();
 			LumosLight.clearAll(server);
 		});
 	}

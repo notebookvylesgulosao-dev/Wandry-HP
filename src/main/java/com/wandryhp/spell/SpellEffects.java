@@ -128,8 +128,8 @@ public final class SpellEffects {
 					ignite(world, projectile, pos);
 				}
 			}
-			// Lumos e Expecto Patronum não têm projétil: rodam direto em SpellCaster.
-			case LUMOS, EXPECTO_PATRONUM -> { }
+			// Lumos, Expecto Patronum e Vortem não têm projétil: rodam direto em SpellCaster.
+			case LUMOS, EXPECTO_PATRONUM, VORTEM -> { }
 		}
 	}
 

@@ -129,6 +129,13 @@ public final class HouseArmorGeometry {
 		for (JsonObject cube : cubes) {
 			Part part = partOf(cube.get("name").getAsString());
 			if (part == null) continue;
+			if (part == Part.RIGHT_ARM || part == Part.LEFT_ARM) {
+				// O lado do braço vem da posição do cubo (x < centro = LeftArm), nao do nome: nos modelos novos
+				// o braço direito esta nomeado "LeftArm". Nos modelos antigos o resultado e o mesmo.
+				double[] armFrom = array(cube.getAsJsonArray("from"));
+				double[] armTo = array(cube.getAsJsonArray("to"));
+				part = (armFrom[0] + armTo[0]) / 2.0 < centerX ? Part.LEFT_ARM : Part.RIGHT_ARM;
+			}
 
 			double inflate = cube.has("inflate") ? cube.get("inflate").getAsDouble() : 0.0;
 			if (part == Part.RIGHT_ARM || part == Part.LEFT_ARM) {

@@ -96,6 +96,10 @@ public final class SpellCaster {
 			PatronusEntity.summon(player);
 			return;
 		}
+		if (spell == Spell.VORTEM) {
+			Vortem.cast(player);
+			return;
+		}
 
 		Vec3d eye = player.getEyePos();
 		Vec3d forward = player.getRotationVec(1.0f);

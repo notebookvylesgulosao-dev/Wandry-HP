@@ -1,0 +1,175 @@
+{
+  "providers": [
+    {
+      "type": "bitmap",
+      "file": "wandryhp:font/house_gryffindor.png",
+      "ascent": 7,
+      "height": 8,
+      "chars": [
+        "\ue000"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "wandryhp:font/house_hufflepuff.png",
+      "ascent": 7,
+      "height": 8,
+      "chars": [
+        "\ue001"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "wandryhp:font/house_ravenclaw.png",
+      "ascent": 7,
+      "height": 8,
+      "chars": [
+        "\ue002"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "wandryhp:font/house_slytherin.png",
+      "ascent": 7,
+      "height": 8,
+      "chars": [
+        "\ue003"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "wandryhp:font/align_neutral_gryffindor.png",
+      "ascent": 7,
+      "height": 8,
+      "chars": [
+        "\ue010"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "wandryhp:font/align_neutral_hufflepuff.png",
+      "ascent": 7,
+      "height": 8,
+      "chars": [
+        "\ue011"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "wandryhp:font/align_neutral_ravenclaw.png",
+      "ascent": 7,
+      "height": 8,
+      "chars": [
+        "\ue012"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "wandryhp:font/align_neutral_slytherin.png",
+      "ascent": 7,
+      "height": 8,
+      "chars": [
+        "\ue013"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "wandryhp:font/align_neutral_none.png",
+      "ascent": 7,
+      "height": 8,
+      "chars": [
+        "\ue014"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "wandryhp:font/align_good_gryffindor.png",
+      "ascent": 7,
+      "height": 8,
+      "chars": [
+        "\ue018"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "wandryhp:font/align_good_hufflepuff.png",
+      "ascent": 7,
+      "height": 8,
+      "chars": [
+        "\ue019"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "wandryhp:font/align_good_ravenclaw.png",
+      "ascent": 7,
+      "height": 8,
+      "chars": [
+        "\ue01a"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "wandryhp:font/align_good_slytherin.png",
+      "ascent": 7,
+      "height": 8,
+      "chars": [
+        "\ue01b"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "wandryhp:font/align_good_none.png",
+      "ascent": 7,
+      "height": 8,
+      "chars": [
+        "\ue01c"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "wandryhp:font/align_evil_gryffindor.png",
+      "ascent": 7,
+      "height": 8,
+      "chars": [
+        "\ue020"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "wandryhp:font/align_evil_hufflepuff.png",
+      "ascent": 7,
+      "height": 8,
+      "chars": [
+        "\ue021"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "wandryhp:font/align_evil_ravenclaw.png",
+      "ascent": 7,
+      "height": 8,
+      "chars": [
+        "\ue022"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "wandryhp:font/align_evil_slytherin.png",
+      "ascent": 7,
+      "height": 8,
+      "chars": [
+        "\ue023"
+      ]
+    },
+    {
+      "type": "bitmap",
+      "file": "wandryhp:font/align_evil_none.png",
+      "ascent": 7,
+      "height": 8,
+      "chars": [
+        "\ue024"
+      ]
+    }
+  ]
+}

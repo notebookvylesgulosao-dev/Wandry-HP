@@ -19,3 +19,10 @@ Classes Good/Evil/Normal, loot de pergaminhos em estruturas, animação de braç
 
 ## Compilar
 JDK 21 e Gradle 8.x; `gradle build` gera o JAR em `build/libs/`.
+
+## Sistema de alinhamento
+
+- Livros: `good_book` (Livro do Bem) e `bad_book` (Livro do Mal). Clique direito dá o alinhamento e consome o livro; o jogador começa Neutro. Se já tiver aquele alinhamento, o livro é mantido.
+- O alinhamento fica salvo no jogador (data attachment persistente) e é copiado ao renascer.
+- Ícones da casa + alinhamento aparecem antes do nick no chat, no TAB e acima da cabeça (fonte `wandryhp:badges`). Para regenerar os ícones/modelos: `python3 -I tools/prepare_alignment_assets.py .`
+- Feitiços: Bons (Expecto Patronum, Expelliarmus, Vortem), Maus (Avada Kedavra, Crucio, Imperius), Normais (demais). Ver `SpellAlignment` e `SpellUnlocks`.

@@ -64,7 +64,16 @@ public enum Spell {
 
 	INCENDIO("incendio", "Incendio", "red", 0xE02020, 20, 35,
 			new Item[] {Items.RED_WOOL, Items.RED_CONCRETE, Items.RED_DYE},
-			new int[] {0xE02020, 0xB01010});
+			new int[] {0xE02020, 0xB01010}),
+
+	/**
+	 * Sem projétil: atrai os mobs ao centro, ergue e solta ({@link Vortem}). Sem dano. Paleta azul-bebê e turquesa
+	 * (sem roxo); reaproveita o modelo turquesa só porque todo feitiço precisa de um modelId.
+	 */
+	VORTEM("vortem", "Vortem", "turquoise", 0x7FDBFF, 30, 45,
+			new Item[] {Items.LIGHT_BLUE_WOOL, Items.CYAN_CONCRETE, Items.LIGHT_BLUE_DYE,
+					Items.CYAN_WOOL, Items.LIGHT_BLUE_CONCRETE, Items.CYAN_DYE},
+			new int[] {0x89CFF0, 0x40E0D0, 0xA6E3F5, 0x2EE6D6});
 
 	public final String id;
 	public final String displayName;

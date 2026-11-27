@@ -40,5 +40,12 @@
   "item.wandryhp.letter_hufflepuff": "Hufflepuff Letter",
   "item.wandryhp.letter_ravenclaw": "Ravenclaw Letter",
   "item.wandryhp.letter_slytherin": "Slytherin Letter",
-  "message.wandryhp.broom.look_down": "Look at the ground to place the broom"
+  "message.wandryhp.broom.look_down": "Look at the ground to place the broom",
+  "item.wandryhp.good_book": "Book of Good",
+  "item.wandryhp.bad_book": "Book of Evil",
+  "alignment.wandryhp.neutral": "Neutral",
+  "alignment.wandryhp.good": "Good",
+  "alignment.wandryhp.evil": "Evil",
+  "message.wandryhp.alignment.changed": "Your alignment is now: %s",
+  "message.wandryhp.alignment.already": "You are already %s"
 }
